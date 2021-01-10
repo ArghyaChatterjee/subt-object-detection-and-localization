@@ -1,5 +1,10 @@
 # SubT-Object-Detection
 It's a repository which preserves Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment.
+## Artifact Classes:
+No. of Artifact Classes: 5
+Name of the Artifact Classes: Backpack, Survivor, Cell Phone, Fire Extinguisher, Drill
+## Training Data:
+Training & Validation Dataset (i.e `train` & `valid` folder) with proper labeling should be kept inside `~/darknet/data/` directory. You can download the training and validation dataset from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing).  
 ## Training Demo:
 ```
 cd ~/darknet
@@ -7,9 +12,11 @@ cd ~/darknet
 ```
 ## Training Loss Curve:
 <p align="center">
-    <img src="asset/chart.png", width="800">
+    <img src="asset/chart.png", width="600">
 </p>
 
+## Download Weight File:
+The default weight file will be saved after every 1000 iterations inside `~/darknet/backup/` directory during training. You can use your own weight file or you can use mine. In my case, I have trained for around 9000 iterations. You can download the weight file from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing).  
 ## Testing Demo:
 ```
 cd ~/darknet
