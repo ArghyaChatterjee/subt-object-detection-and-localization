@@ -6,7 +6,7 @@ Name of the Artifact Classes: Backpack, Survivor, Cell Phone, Fire Extinguisher,
 ## Artifact Localization Points:
 
 ## Training Data:
-Training & Validation Dataset (i.e `train` & `valid` folder) with proper labeling should be kept inside `~/darknet/data/` directory. You can download the training and validation dataset from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing).  
+Training & Validation Dataset (i.e `train` & `valid` folder) with proper labeling should be kept inside `~/darknet/data/` directory. You can download the training and validation dataset from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing). Download pre-trained weight file for convolutional layer from [here](https://pjreddie.com/media/files/darknet53.conv.74). 
 ## Training Demo:
 ```
 cd ~/darknet
