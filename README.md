@@ -7,7 +7,7 @@ cd ~/darknet
 ```
 ## Training Loss Curve:
 <p align="center">
-    <img src="asset/chart.png", width="400">
+    <img src="asset/chart.png", width="800">
 </p>
 
 ## Testing Demo:
