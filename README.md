@@ -21,7 +21,7 @@ cd ~/darknet
 </p>
 
 ## Download Weight File:
-The default weight file will be saved after every 1000 iterations inside `~/darknet/backup` directory during training. You can use your own weight file or you can use mine. In my case, I have trained for around 9000 iterations. You can download the weight file from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing).  
+The default weight file will be saved after every 1000 iterations inside `~/darknet/backup` directory during training. You can use your own weight file or you can use mine. In my case, I have trained for around 9000 iterations. It took around 26 hours for training purpose. You can download the weight file from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing).  
 ## Testing Demo:
 ```
 cd ~/darknet
