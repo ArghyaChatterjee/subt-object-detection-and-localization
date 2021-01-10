@@ -1,5 +1,5 @@
 # SubT-Object-Detection
-It's a repository which preserves Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment.
+It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment.
 ## Artifact Classes:
 No. of Artifact Classes: 5 <br>
 Name of the Artifact Classes: Backpack, Survivor, Cell Phone, Fire Extinguisher, Drill
