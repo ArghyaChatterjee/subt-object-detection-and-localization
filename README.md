@@ -25,7 +25,7 @@ The default weight file will be saved after every 1000 iterations inside `~/dark
 ## Testing Demo:
 ```
 cd ~/darknet
-./build-release/darknet detector demo data/train.data cfg/yolov3_train.cfg backup/yolov3_train_9000.weights -c 0
+./build-release/darknet detector demo data/train.data cfg/yolov3_test.cfg backup/yolov3_train_9000.weights -c 0
 ```
 ## Testing Result:
 <p align="center">
