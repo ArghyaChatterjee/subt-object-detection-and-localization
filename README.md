@@ -5,7 +5,7 @@ No. of Artifact Classes: 5 <br>
 Name of the Artifact Classes: Backpack, Survivor, Cell Phone, Fire Extinguisher, Drill.
 ## Artifact Localization Points:
 <p align="center">
-    <img src="asset/Artifact.png", width="600">
+    <img src="asset/Artifact.png", width="400">
 </p>
 
 ## Training Data:
@@ -17,7 +17,7 @@ cd ~/darknet
 ```
 ## Training Loss Curve:
 <p align="center">
-    <img src="asset/chart.png", width="600">
+    <img src="asset/chart.png", width="400">
 </p>
 
 ## Download Weight File:
@@ -27,5 +27,10 @@ The default weight file will be saved after every 1000 iterations inside `~/dark
 cd ~/darknet
 ./build-release/darknet detector demo data/train.data cfg/yolov3_train.cfg backup/yolov3_train_9000.weights -c 0
 ```
+## Testing Result:
+<p align="center">
+    <img src="asset/detected_artifacts.png", width="400">
+</p>
+
 ## Resources Used During Training & Testing:
 The data were trained inside Ubuntu 18.04 with Nvidia Graphics GTX 1070, Driver version 440.02 & CUDA version 10.2. I took around 300 images for each class totalling to 1500 images of which 1350 (90%) images were used as training dataset & 150 images (10%) were used as validation dataset. The images used in this work are taken from the internet. Respective people can claim copyright for the images.     
