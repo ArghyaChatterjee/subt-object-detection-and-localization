@@ -33,4 +33,7 @@ cd ~/darknet
 </p>
 
 ## Resources Used During Training & Testing:
-The data were trained inside Ubuntu 18.04 with Nvidia Graphics GTX 1070, Driver version 440.02 & CUDA version 10.2. I took around 300 images for each class totalling to 1500 images of which 1350 (90%) images were used as training dataset & 150 images (10%) were used as validation dataset. The images used in this work are taken from the internet. Respective people can claim copyright for the images.     
+The data were trained inside Ubuntu 18.04 with Nvidia Graphics GTX 1070, Driver version 440.02 & CUDA version 10.2. I took around 300 images for each class totalling to 1500 images of which 1350 (90%) images were used as training dataset & 150 images (10%) were used as validation dataset. The testing was done with a logitech webcam and the detection frame rate was 15 fps.  
+
+## Image Copyright: 
+The images used in this work during training are taken from the internet. Respective people can claim copyright for the images.     
