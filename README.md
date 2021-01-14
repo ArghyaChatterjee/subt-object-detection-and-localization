@@ -9,8 +9,12 @@ You can see the Artifacts Specification in details [here](https://www.subtchalle
     <img src="asset/Artifact.png", width="400">
 </p>
 
+## Darknet Installation:
+You need to install darknet on your Ubuntu 18.04 machine. Follow the tutorial [here](https://github.com/AlexeyAB/darknet) to install darknet in order to use YOLO V3/v4. Check the installation with your webcam to reassure that you have installed it properly.  
 ## Training Data:
 Training & Validation Dataset (i.e `train` & `valid` folder) with proper labeling should be kept inside `~/darknet/data` directory. You can download the training and validation dataset from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing). Download pre-trained weight file for convolutional layer from [darknet53.conv.74](https://pjreddie.com/media/files/darknet53.conv.74) & keep it inside `~/darknet` directory. 
+## Labelling Data:
+In order to label data collected from different sources, install `labelImg`. You can find the corresponding download & installation proccedure [here](https://github.com/tzutalin/labelImg). Just remember when using 'labelImg', change the image labeling format from pascal to YOLO (by clicking on the side button 'pascal') and save the corresponding 'img.txt' labeled files accordingly. Each labeled image will produce a 'x.txt' file where the value 'x' will be the name of the original image. 
 ## Training Demo:
 ```
 cd ~/darknet
@@ -21,7 +25,7 @@ cd ~/darknet
     <img src="asset/chart.png", width="400">
 </p>
 
-## Download Weight File:
+## Generate Weight File:
 The default weight file will be saved after every 1000 iterations inside `~/darknet/backup` directory during training. You can use your own weight file or you can use mine. In my case, I have trained for around 9000 iterations. It took around 26 hours for training purpose. You can download the weight file from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing).  
 ## Testing Demo:
 ```
