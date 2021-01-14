@@ -4,6 +4,7 @@ It's a repository for preserving Artifact detection model in order to detect obj
 No. of Artifact Classes: 5 <br>
 Name of the Artifact Classes: Backpack, Survivor, Cell Phone, Fire Extinguisher, Drill.
 ## Artifact Localization Points:
+You can see the Artifacts Specification in details [here](https://www.subtchallenge.com/resources/SubT_Cave_Artifacts_Specification.pdf).
 <p align="center">
     <img src="asset/Artifact.png", width="400">
 </p>
@@ -42,4 +43,4 @@ For better resolution video, see [here](https://www.youtube.com/watch?v=IBYRoKQE
 </p>
 
 ## Image Copyright: 
-The images used in this work during training are taken from the internet. Respective people can claim copyright for the images.     
+Some of the images used in this repo are properties of DARPA. The images used in this work during training are taken from the internet. Respective people can claim copyright for the images.     
