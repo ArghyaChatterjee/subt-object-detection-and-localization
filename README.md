@@ -15,6 +15,15 @@ You need to install darknet on your Ubuntu 18.04 machine. Follow the tutorial [h
 Training & Validation Dataset (i.e `train` & `valid` folder) with proper labeling should be kept inside `~/darknet/data` directory. You can download the training and validation dataset from [here](https://drive.google.com/drive/folders/1vJiqT4SQExbuHGb6kJoW2MeFRDpF8kJq?usp=sharing). Download pre-trained weight file for convolutional layer from [darknet53.conv.74](https://pjreddie.com/media/files/darknet53.conv.74) & keep it inside `~/darknet` directory. 
 ## Labelling Data:
 In order to label data collected from different sources, install `labelImg`. You can find the corresponding download & installation proccedure [here](https://github.com/tzutalin/labelImg). Just remember when using 'labelImg', change the image labeling format from pascal to YOLO (by clicking on the side button 'pascal') and save the corresponding 'img.txt' labeled files accordingly. Each labeled image will produce a 'x.txt' file where the value 'x' will be the name of the original image. 
+## Creating Text files for Training & Testing:
+To create `train.txt` and `test.txt`, download `train_txt_creator.py` & `test_txt_creator.py` files from this repository, put them inside `Home` directory and run in the terminal:
+```
+## To create train.txt file, don't forget to change the path mentioned inside train_txt_creator.py file
+python train_txt_creator.py
+
+## To create test.txt file, don't forget to change the path mentioned inside test_txt_creator.py file
+python test_txt_creator.py
+```
 ## Training Demo:
 ```
 cd ~/darknet
