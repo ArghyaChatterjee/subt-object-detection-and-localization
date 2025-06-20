@@ -1,4 +1,4 @@
-# SubT-Object-Detection-with-YOLOv3-and-Darknet
+# SubT Object Detection and Localization
 It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment.
 ## Artifact Classes:
 No. of Artifact Classes: 5 <br>
