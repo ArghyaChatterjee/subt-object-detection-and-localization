@@ -26,6 +26,7 @@ std::string object_frame;
 std::string artifact_origin_frame;
 std::string rgbd_pc_topic;
 std::string darknet_bb_topic;
+std::string dst_address;
 
 // define the fundamental traits of an artifact (type and location),
 // and report the most recently found artifact
@@ -37,13 +38,13 @@ struct Artifact
 Artifact artifact_to_report;
 bool have_an_artifact_to_report = false;
 
-void BaseStationCallback(
+void IncomingMsgCallback(
   const std::string & srcAddress,
   const std::string & dstAddress,
   const uint32_t dstPort,
   const std::string & data);
 
-void ReportArtifacts(const ros::TimerEvent &, subt::CommsClient & commsClient);
+void RelayArtifact(const ros::TimerEvent &, subt::CommsClient & commsClient);
 
 void ProcessDetection(
   const sensor_msgs::PointCloud2::ConstPtr & cloud_msg,
@@ -67,23 +68,17 @@ int main(int argc, char *argv[])
   private_nh.param("artifact_origin_frame", artifact_origin_frame, std::string("artifact_origin"));
   private_nh.param("rgbd_pc_topic", rgbd_pc_topic, "/" + robot_name + "/downward_realsense/points");
   private_nh.param("darknet_bb_topic", darknet_bb_topic, std::string("/darknet_ros/bounding_boxes"));
-  ROS_INFO_STREAM(
-    "artifact_reporter values..." << std::endl <<
-    "robot_name: " << robot_name << std::endl <<
-    "camera_frame: " << camera_frame << std::endl <<
-    "artifact_origin_frame: " << artifact_origin_frame << std::endl <<
-    "rgbd_pc_topic: " << rgbd_pc_topic << std::endl <<
-    "darknet_bb_topic: " << darknet_bb_topic << std::endl);
+  private_nh.param("destination_address", dst_address, std::string(subt::kBaseStationName));
 
   tf2_ros::Buffer tf_buffer;
   tf2_ros::TransformListener tf_listener(tf_buffer);
 
-  // set up communications with the base station for artifact reporting
+  // set up communications for artifact reporting
   subt::CommsClient commsClient(robot_name);
-  commsClient.Bind(&BaseStationCallback, robot_name);
+  commsClient.Bind(&IncomingMsgCallback, robot_name);
 
   // found artifacts will be attempted to be sent periodically through a timer
-  ros::Timer timer = nh.createTimer(ros::Duration(1.0), boost::bind(&ReportArtifacts, _1, boost::ref(commsClient)));
+  ros::Timer timer = nh.createTimer(ros::Duration(1.0), boost::bind(&RelayArtifact, _1, boost::ref(commsClient)));
 
   // when darknet detects an object, we need the corresponding point cloud data from the RGBD camera
   // so that we can determine the location of this object
@@ -95,33 +90,18 @@ int main(int argc, char *argv[])
   ros::spin();
 }
 
-void BaseStationCallback(
+void IncomingMsgCallback(
   const std::string & srcAddress,
   const std::string & dstAddress,
   const uint32_t dstPort,
   const std::string & data)
 {
-  subt::msgs::ArtifactScore res;
-  if (!res.ParseFromString(data))
-  {
-    ROS_ERROR("ArtifactReporter::BaseStationCallback(): error deserializing message.");
-  }
-
-  geometry_msgs::Point location;
-  location.x = res.artifact().pose().position().x();
-  location.y = res.artifact().pose().position().y();
-  location.z = res.artifact().pose().position().z();
-
-  ROS_INFO_STREAM("Artifact at location " <<
-    location.x << ", " << location.y << ", " << location.z <<
-    " was received by the base station");
-  
   // since the artifact we saved has been reported, we no longer have an artifact to report
   // until we detect another one
   have_an_artifact_to_report = false;
 }
 
-void ReportArtifacts(const ros::TimerEvent &, subt::CommsClient & commsClient)
+void RelayArtifact(const ros::TimerEvent &, subt::CommsClient & commsClient)
 {
   if (!have_an_artifact_to_report)
   {
@@ -146,8 +126,8 @@ void ReportArtifacts(const ros::TimerEvent &, subt::CommsClient & commsClient)
     ROS_ERROR_STREAM("ArtifactReporter::ReportArtifact(): Error serializing message\n" << artifact.DebugString());
   }
 
-  // report the artifact
-  commsClient.SendTo(serializedData, subt::kBaseStationName);
+  // share the artifact
+  commsClient.SendTo(serializedData, dst_address);
 }
 
 void ProcessDetection(
@@ -157,6 +137,12 @@ void ProcessDetection(
 {
   for (const auto & box : bb_msg->bounding_boxes)
   {
+    // make sure the detection is not a false positive
+    if ((box.Class != "backpack") && (box.Class != "suitcase"))
+    {
+      continue;
+    }
+
     // take the centroid of the points in the bounding box to get the artifact's location
     // (we'll need to crop the original point cloud to just the points in the bounding box)
     auto cropped_pc = CropPointCloud(cloud_msg, box);
@@ -168,85 +154,18 @@ void ProcessDetection(
     auto scoring_pose = tf_buffer.transform<geometry_msgs::PoseStamped>(
       centroid, artifact_origin_frame, ros::Duration(1.0));
 
-    if (box.Class == "Backpack")
-    {
-      artifact_to_report.type = subt::ArtifactType::TYPE_BACKPACK;
-      artifact_to_report.location.x = scoring_pose.pose.position.x;
-      artifact_to_report.location.y = scoring_pose.pose.position.y;
-      artifact_to_report.location.z = scoring_pose.pose.position.z;
-      have_an_artifact_to_report = true;
+    artifact_to_report.type = subt::ArtifactType::TYPE_BACKPACK;
+    artifact_to_report.location.x = scoring_pose.pose.position.x;
+    artifact_to_report.location.y = scoring_pose.pose.position.y;
+    artifact_to_report.location.z = scoring_pose.pose.position.z;
+    have_an_artifact_to_report = true;
 
-      ROS_INFO_STREAM("Detected a backapack! Location w.r.t "
-        << artifact_origin_frame << " : "
-        << artifact_to_report.location.x << ", "
-        << artifact_to_report.location.y << ", "
-        << artifact_to_report.location.z
-        << " (x,y,z)");
-    }
-
-    if (box.Class == "Survivor")
-    {
-      artifact_to_report.type = subt::ArtifactType::TYPE_RESCUE_RANDY;
-      artifact_to_report.location.x = scoring_pose.pose.position.x;
-      artifact_to_report.location.y = scoring_pose.pose.position.y;
-      artifact_to_report.location.z = scoring_pose.pose.position.z;
-      have_an_artifact_to_report = true;
-
-      ROS_INFO_STREAM("Detected a survivor! Location w.r.t "
-        << artifact_origin_frame << " : "
-        << artifact_to_report.location.x << ", "
-        << artifact_to_report.location.y << ", "
-        << artifact_to_report.location.z
-        << " (x,y,z)");
-    }
-
-    if (box.Class == "Cell Phone")
-    {
-      artifact_to_report.type = subt::ArtifactType::TYPE_PHONE;
-      artifact_to_report.location.x = scoring_pose.pose.position.x;
-      artifact_to_report.location.y = scoring_pose.pose.position.y;
-      artifact_to_report.location.z = scoring_pose.pose.position.z;
-      have_an_artifact_to_report = true;
-
-      ROS_INFO_STREAM("Detected a cell phone! Location w.r.t "
-        << artifact_origin_frame << " : "
-        << artifact_to_report.location.x << ", "
-        << artifact_to_report.location.y << ", "
-        << artifact_to_report.location.z
-        << " (x,y,z)");
-    }
-
-    if (box.Class == "Fire Extinguisher")
-    {
-      artifact_to_report.type = subt::ArtifactType::TYPE_EXTINGUISHER;
-      artifact_to_report.location.x = scoring_pose.pose.position.x;
-      artifact_to_report.location.y = scoring_pose.pose.position.y;
-      artifact_to_report.location.z = scoring_pose.pose.position.z;
-      have_an_artifact_to_report = true;
-
-      ROS_INFO_STREAM("Detected a fire extinguisher! Location w.r.t "
-        << artifact_origin_frame << " : "
-        << artifact_to_report.location.x << ", "
-        << artifact_to_report.location.y << ", "
-        << artifact_to_report.location.z
-        << " (x,y,z)");
-    }
-
-    if (box.Class == "Drill")
-    {
-      artifact_to_report.type = subt::ArtifactType::TYPE_DRILL;
-      artifact_to_report.location.x = scoring_pose.pose.position.x;
-      artifact_to_report.location.y = scoring_pose.pose.position.y;
-      artifact_to_report.location.z = scoring_pose.pose.position.z;
-      have_an_artifact_to_report = true;
-
-      ROS_INFO_STREAM("Detected a drill! Location w.r.t "
-        << artifact_origin_frame << " : "
-        << artifact_to_report.location.x << ", "
-        << artifact_to_report.location.y << ", "
-        << artifact_to_report.location.z
-        << " (x,y,z)");
-    }
+    ROS_INFO_STREAM("Detected a backapack! Location w.r.t "
+      << artifact_origin_frame << " : "
+      << artifact_to_report.location.x << ", "
+      << artifact_to_report.location.y << ", "
+      << artifact_to_report.location.z
+      << " (x,y,z)");
   }
 }
 
@@ -260,7 +179,7 @@ sensor_msgs::PointCloud2 CropPointCloud(
   modified_pc.fields = original_pc->fields;
   modified_pc.is_bigendian = original_pc->is_bigendian;
   modified_pc.point_step = original_pc->point_step;
-  modified_pc.is_dense = original_pc->is_dense;  
+  modified_pc.is_dense = original_pc->is_dense;
   modified_pc.height = bb.ymax - bb.ymin + 1;
   modified_pc.width = bb.xmax - bb.xmin + 1;
   modified_pc.row_step = modified_pc.width * modified_pc.point_step;
