@@ -1,8 +1,5 @@
 # SubT Object Detection and Localization
-It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment.
-
-## SubT Simulator Implementation:
-For better resolution video, see [here](https://www.youtube.com/watch?v=wtAtQa4P74U).
+It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment. For better resolution video, see [here](https://www.youtube.com/watch?v=wtAtQa4P74U).
 <p align="center">
     <img src="asset/Custom_object_detection.gif", width="800">
 </p>
