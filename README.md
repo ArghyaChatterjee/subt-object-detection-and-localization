@@ -1,7 +1,13 @@
 # SubT Object Detection and Localization
-It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment. For better resolution video, see [here](https://www.youtube.com/watch?v=wtAtQa4P74U).
+It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment. 
+
 <p align="center">
-    <img src="asset/Custom_object_detection.gif", width="800">
+  <a href="https://www.youtube.com/watch?v=3e3ne0HYJ2U" target="_blank">
+    <img src="asset/ANYmal.gif" alt="Video Thumbnail" width="50%">
+  </a>
+    <a href="https://www.youtube.com/watch?v=wtAtQa4P74U" target="_blank">
+    <img src="asset/Custom_object_detection.gif" alt="Video Thumbnail" width="50%">
+  </a>
 </p>
 
 ## Artifact Classes:
@@ -12,6 +18,7 @@ You can see the Artifacts Specification in details [here](https://www.subtchalle
 <p align="center">
     <img src="asset/Artifact.png", width="400">
 </p>
+
 
 ## Darknet Installation:
 You need to install darknet on your Ubuntu 18.04 machine. Follow the tutorial [here](https://github.com/AlexeyAB/darknet) to install darknet in order to use YOLO V3/v4. Check the installation with your webcam to reassure that you have installed it properly.  
