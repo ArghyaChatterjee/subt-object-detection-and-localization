@@ -3,10 +3,10 @@ It's a repository for preserving Artifact detection model in order to detect obj
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=3e3ne0HYJ2U" target="_blank">
-    <img src="asset/ANYmal.gif" alt="Video Thumbnail" width="50%">
+    <img src="asset/ANYmal.gif" alt="Video Thumbnail" width="45%">
   </a>
     <a href="https://www.youtube.com/watch?v=wtAtQa4P74U" target="_blank">
-    <img src="asset/Custom_object_detection.gif" alt="Video Thumbnail" width="50%">
+    <img src="asset/Custom_object_detection.gif" alt="Video Thumbnail" width="45%">
   </a>
 </p>
 
