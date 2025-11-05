@@ -2,11 +2,8 @@
 It's a repository for preserving Artifact detection model in order to detect object using YOLO v3 inside SubT simulator / real world SubT Environment. 
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=3e3ne0HYJ2U" target="_blank">
-    <img src="asset/ANYmal.gif" alt="Video Thumbnail" width="45%">
-  </a>
     <a href="https://www.youtube.com/watch?v=wtAtQa4P74U" target="_blank">
-    <img src="asset/Custom_object_detection.gif" alt="Video Thumbnail" width="45%">
+    <img src="asset/Custom_object_detection.gif" alt="Video Thumbnail" width="100%">
   </a>
 </p>
 
@@ -18,7 +15,6 @@ You can see the Artifacts Specification in details [here](https://www.subtchalle
 <p align="center">
     <img src="asset/Artifact.png", width="400">
 </p>
-
 
 ## Darknet Installation:
 You need to install darknet on your Ubuntu 18.04 machine. Follow the tutorial [here](https://github.com/AlexeyAB/darknet) to install darknet in order to use YOLO V3/v4. Check the installation with your webcam to reassure that you have installed it properly.  
@@ -59,6 +55,12 @@ cd ~/darknet
 
 ## Resources Used During Training & Testing:
 The data were trained inside Ubuntu 18.04 with Nvidia Graphics GTX 1070, Driver version 440.82 & CUDA version 10.2. I took around 300 images for each class totalling to 1500 images of which 1350 (90%) images were used as training dataset & 150 images (10%) were used as validation dataset. The testing was done both with a logitech webcam in real life environment & with an Intel RealSense in virtual environment. In both the time, the detection frame rate was 15 fps.  
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=3e3ne0HYJ2U" target="_blank">
+    <img src="asset/ANYmal.gif" alt="Video Thumbnail" width="100%">
+  </a>
+</p>
 
 ## Image Copyright: 
 Some of the images used in this repo are properties of DARPA. The images used in this work during training are taken from the internet. Respective people can claim copyright for the images.     
